@@ -1,3 +1,4 @@
+
 # Redux DevTools todomvc example
 
 ## Running Example
@@ -5,7 +6,7 @@
 First, clone the project:
 
 ```
-git clone https://github.com/gaearon/redux-devtools.git
+git clone https://github.com/YaFeiWyf/webpackPro.git
 ```
 
 Then install the dependencies in the root folder:
