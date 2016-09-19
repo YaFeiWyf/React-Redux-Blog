@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
-import todos from './todos';
+import blogs from './blogs';
+import resume from './resume';
 
 const rootReducer = combineReducers({
-	todos
+	blogs,
+	resume
 });
 export default rootReducer;

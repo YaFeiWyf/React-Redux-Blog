@@ -1,47 +1,105 @@
-var path = require('path');
-var webpack = require('webpack');
+var rucksack = require('rucksack-css')
+var webpack = require('webpack')
+var path = require('path')
 
-module.exports = {
-  devtool: 'eval',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    'react-hot-loader/patch',
-    './index'
-  ],
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  resolve: {
-    alias: {
-      'redux-devtools/lib': path.join(__dirname, '..', '..', 'src'),
-      'redux-devtools': path.join(__dirname, '..', '..', 'src'),
-      'react': path.join(__dirname, 'node_modules', 'react')
-    },
-    extensions: ['', '.js']
-  },
-  resolveLoader: {
-    'fallback': path.join(__dirname, 'node_modules')
+/* baseConfig */
+var baseConfig = {
+  context: path.join(__dirname, './client'),
+  entry: {
+    jsx: './index.js',
+    html: './index.html',
+    vendor: [
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'react-router-redux',
+      'redux'
+    ]
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      exclude: /node_modules/,
-      include: __dirname
-    }, {
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, '..', '..', 'src')
-    }, {
-      test: /\.css?$/,
-      loaders: ['style', 'raw'],
-      include: __dirname
-    }]
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'file?name=[name].[ext]'
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loaders: [
+          'babel-loader'
+        ]
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  postcss: [
+    rucksack({
+      autoprefixer: true
+    })
+  ],
+  devServer: {
+    contentBase: './client',
+    hot: true
   }
-};
+}
+/* end baseConfig */
+
+/* get env */
+function getEnv() {
+  const args = require('minimist')(process.argv.slice(2));
+  var env;
+  if (args._.length > 0 && args._.indexOf('start') !== -1) {
+    env = 'test';
+  } else if (args.env) {
+    env = args.env;
+  } else {
+    env = 'dev';
+  }
+  return env
+}
+
+var env = getEnv()
+/* end get env */
+
+/*define envConfig*/
+var envConfig = {
+  'build' : {
+    output: {
+      path: path.join(__dirname, './static'),
+      filename: 'bundle-[hash:6].js',
+    },
+    plugins: [
+      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+      new webpack.DefinePlugin({
+        'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+      }),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new webpack.NoErrorsPlugin(),
+    ]
+  },
+  'dev': {
+    output: {
+      path: path.join(__dirname, './static'),
+      filename: 'bundle.js',
+    },
+    plugins: [
+      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+      new webpack.DefinePlugin({
+        'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+      }),
+    ]
+  }
+}
+
+/* end define envConfig*/
+
+module.exports = Object.assign({}, baseConfig, envConfig[env])

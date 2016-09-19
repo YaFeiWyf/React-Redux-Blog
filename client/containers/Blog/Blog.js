@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions/Blogs';
 import BlogItem from '../../components/BlogItem/BlogItem';
+require ('./index.css');
 
-export default class Blog extends Component {
+class Blog extends Component {
 	constructor(props){
 		super(props);
 	}
@@ -13,11 +14,10 @@ export default class Blog extends Component {
 		const { blogs, actions } = this.props;
 		let blogItems = [];
 		blogs.map((blog, index)=>{
-			blogItems.push(blog.title+'--'+blog.author+'--'+blog.content)
+			blogItems.push(<BlogItem key={index} blogData={blog} />)
 		});
 		return (
 			<div className="blogsContainer">
-				<div className="test">hello, world</div>
 				<ul>
 					{blogItems}
 				</ul>
@@ -25,3 +25,18 @@ export default class Blog extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+  return {
+    blogs: state.blogs.blogs
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blog);
+

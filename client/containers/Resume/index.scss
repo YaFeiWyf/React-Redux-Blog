@@ -1,0 +1,30 @@
+.resumeContianer {
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 40%;
+	background: lighten(#000, 40%);
+}
+.resumeContianer .resumeTitle {
+	line-height: 3;
+	font-size: 30px;
+	color: darken(#fff, 5%);
+	text-align: center;
+}
+.resumeContianer .personalInfo {
+	width: 80%;
+	margin: 0 auto;
+	color:#fff;
+	line-height: 2;
+}
+$lineHeight: 80px;
+.resumeContianer .currentState {
+	width: 100%;
+	height: $lineHeight;
+	line-height: $lineHeight;
+	margin-top: 200px;
+	text-align: center;
+	color: #fff;
+	background: rgba(255,255,255,.5);
+}

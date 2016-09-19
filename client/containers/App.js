@@ -6,7 +6,7 @@ import Blog from './Blog/Blog';
 
 function mapStateToProps(state) {
   return {
-    blogs: state.todos.blogs
+    blogs: state.blogs.blogs
   };
 }
 

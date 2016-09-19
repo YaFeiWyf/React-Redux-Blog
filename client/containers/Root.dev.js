@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import App from './App';
+//import App from './App';
+import Blog from './Blog/Blog';
+import Resume from './Resume/Resume'
 import DevTools from './DevTools';
 
 export default class Root extends Component {
@@ -9,7 +11,8 @@ export default class Root extends Component {
     return (
       <Provider store={store}>
         <div>
-          <App />
+          <Blog />
+          <Resume />
           /*<DevTools />*/
         </div>
       </Provider>
