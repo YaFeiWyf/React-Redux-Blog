@@ -26,7 +26,6 @@ button, input, select, textarea { /* for ie */
   outline: none;
 }
 html, body {
-  height: 100%;
   background-color: #f2f2f2;
 }
 
@@ -174,3 +173,9 @@ html { overflow-y: scroll; }
     font-size: 72px !important;
 }
 
+body {
+  background: rgb(42, 47, 58);
+}
+#root {
+  background: rgb(42, 47, 58);
+}

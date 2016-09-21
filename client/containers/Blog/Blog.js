@@ -13,9 +13,7 @@ class Blog extends Component {
 	render(){
 		const { blogs, actions } = this.props;
 		let blogItems = [];
-		blogs.map((blog, index)=>{
-			blogItems.push(<BlogItem key={index} blogData={blog} />)
-		});
+		blogs.map((blog, index)=>blogItems.push(<BlogItem key={index} blogData={blog} />));
 		return (
 			<div className="blogsContainer">
 				<ul>

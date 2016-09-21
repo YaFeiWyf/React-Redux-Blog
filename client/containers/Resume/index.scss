@@ -4,7 +4,9 @@
 	top: 0;
 	bottom: 0;
 	width: 40%;
-	background: lighten(#000, 40%);
+	background: url('http://192.168.20.225:3000/client/containers/Resume/images/background.jpg') no-repeat fixed;
+	background-size: cover;
+
 }
 .resumeContianer .resumeTitle {
 	line-height: 3;
@@ -26,5 +28,6 @@ $lineHeight: 80px;
 	margin-top: 200px;
 	text-align: center;
 	color: #fff;
-	background: rgba(255,255,255,.5);
+	background: rgba(255,255,255,.3);
+	//box-shadow: 0 5px 5px rgba(47,47,47,0.98);
 }
